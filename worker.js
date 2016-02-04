@@ -1,45 +1,41 @@
 var elementButton = document.querySelector('#button');
 var elementNumber = document.querySelector('#number');
-var textNumber = document.querySelector('#text');
+
+var counter = document.createElement('div');
+document.body.appendChild(counter);
+
+var text = document.createElement('div');
+text.style.wordBreak = 'break-all';
+document.body.appendChild(text);
+text.innerHTML = '3.';
 
 elementButton.addEventListener('click', function() {
-    spawnWorker(elementNumber.value);
+    for (var i = 0; i < parseInt(elementNumber.value, 10); i += 15) {
+        spawnWorker(i);
+    }
 });
 
-var workerCode = (function() {
-    function findPrimeNumber(index) {
-        var primeNumbers = [];
-        var counter = 1;
+var workerCode = calc.toString() +
+    (function() {
+        onmessage = function(ev) {
+            var number = parseInt(ev.data, 10);
 
-        while(primeNumbers.length < index - 1) {
-            counter++;
+            if (!number) { return; }
 
-            var isComposite = primeNumbers.some(function(el) {
-                return counter % el == 0;
-            });
+            var count = 15;
+            var res = '';
 
-            if (!isComposite) {
-                primeNumbers.push(counter);
+            for (var i = 0; i < count; i++) {
+                res += calc(i + number).slice(0, 1);
             }
-        }
 
-        return counter;
-    }
-
-    onmessage = function(ev) {
-        var number = parseInt(ev.data, 10);
-
-        if (!number) { return; }
-
-        var res = findPrimeNumber(number);
-
-        postMessage(String(res));
-    };
-}).toString();
+            postMessage(res);
+        };
+    }).toString().slice(13, -2);
 
 function spawnWorker(value) {
     var blob = new Blob(
-       [workerCode.slice(13, -2)],
+       [workerCode],
        {type: 'text/javascript'}
     );
     var url = window.URL.createObjectURL(blob);
@@ -50,6 +46,7 @@ function spawnWorker(value) {
 }
 
 function workerMessage(ev) {
-    textNumber.innerHTML += ev.data + ' ';
+    text.innerHTML += ev.data;
+    counter.innerHTML = 1;
     ev.srcElement.terminate();
 }
