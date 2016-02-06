@@ -1,17 +1,19 @@
-var time;
+(function() {
+    var time;
 
-if (performance && performance.now) {
-    time = performance.now.bind(performance);
-} else {
-    time = Date.now.bind(Date);
-}
+    if (performance && performance.now) {
+        time = performance.now.bind(performance);
+    } else {
+        time = Date.now.bind(Date);
+    }
 
-var startTime = 0;
+    var startTime = 0;
 
-window.timeStart = function() {
-    startTime = time();
-};
+    window.timeStart = function() {
+        startTime = time();
+    };
 
-window.timeEnd = function() {
-    return time() - startTime;
-};
+    window.timeEnd = function() {
+        return time() - startTime;
+    };
+})();

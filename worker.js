@@ -76,10 +76,13 @@ function workerMessage(ev) {
 
     counter += res.count;
 
-    ev.srcElement.terminate();
+    var worker = ev.srcElement;
 
     if (workerCount * numbersPerWorker < resultCount) {
-        spawnWorker();
+        worker.postMessage(workerCount * numbersPerWorker);
+        workerCount++;
+    } else {
+        worker.terminate();
     }
 
     str = '3.' + resultArray.join(' ');
