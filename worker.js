@@ -5,17 +5,17 @@ var elementResult = document.querySelector('#elementResult');
 var elementTime = document.querySelector('#elementTime');
 var elementAssert = document.querySelector('#elementAssert');
 
-var str = '3.';
+var str, counter, workerCount, resultCount, resultArray;
 var numbersPerWorker = 100;
-var resultArray = [];
-var counter = 0;
-var resultCount = 0;
 var maxWorkers = 8;
-var workerCount = 0;
 
 elementButton.addEventListener('click', function() {
+    str = '3.';
+    counter = 0;
+    workerCount = 0;
     resultCount = parseInt(elementNumber.value, 10);
 
+    resultArray = [];
     for (var i = 0; i < resultCount; i++) {
         resultArray[i] = '-';
     }

@@ -5,13 +5,12 @@ var elementResult = document.querySelector('#elementResult');
 var elementTime = document.querySelector('#elementTime');
 var elementAssert = document.querySelector('#elementAssert');
 
+var resultCount;
 var numbersPerWorker = 100;
-var resultCount = 0;
 var maxWorkers = 8;
 
 elementButton.addEventListener('click', function() {
     resultCount = parseInt(elementNumber.value, 10);
-
     timeStart();
     spawnWorker();
 });
@@ -29,15 +28,13 @@ function workerFunction(number) {
 
 function spawnWorker() {
     var array = [];
-
     for (var i = 0; i < Math.ceil(resultCount / numbersPerWorker); i++) {
         array[i] = i * numbersPerWorker;
     }
 
-    var worker = new Parallel(array, {
+    new Parallel(array, {
         maxWorkers: maxWorkers
-    });
-    worker
+    })
         .require(calc)
         .map(workerFunction)
         .then(workerDone);

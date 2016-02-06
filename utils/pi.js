@@ -20,6 +20,8 @@ function calc(id) {
         var hx = '0123456789ABCDEF';
 
         y = Math.abs(x);
+        // y = 16 * (y - Math.floor(y));
+        // chx[0] = hx[floor(y)];
 
         for (i = 0; i < nhx; i++){
             y = 16 * (y - Math.floor(y));
