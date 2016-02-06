@@ -5,15 +5,14 @@ var elementCounter = document.createElement('div');
 document.body.appendChild(elementCounter);
 
 var text = document.createElement('div');
-text.style.wordBreak = 'break-all';
 document.body.appendChild(text);
 text.innerHTML = '3.';
 
-var numbersPerWorker = 15;
+var numbersPerWorker = 100;
 var resultArray = [];
 var counter = 0;
 var resultCount = 0;
-var maxWorkers = 5;
+var maxWorkers = 8;
 var workerCount = 0;
 
 elementButton.addEventListener('click', function() {
@@ -27,6 +26,8 @@ elementButton.addEventListener('click', function() {
 });
 
 function run() {
+    timeStart();
+
     for (var i = 0; i < maxWorkers; i++) {
         spawnWorker();
     }
@@ -37,7 +38,7 @@ var workerCode = calc.toString() +
         onmessage = function(ev) {
             var number = parseInt(ev.data, 10);
 
-            var count = 15;
+            var count = 100;
             var res = '';
 
             for (var i = 0; i < count; i++) {
@@ -78,11 +79,12 @@ function workerMessage(ev) {
 
     if (workerCount * numbersPerWorker < resultCount) {
         spawnWorker();
-    } else {
-    //    text.innerHTML = '3.' + resultArray.join('');
     }
 
-    text.innerHTML = '3.' + resultArray.join('');
+    if (counter >= resultCount) {
+        console.log(timeEnd());
+    }
 
+    text.innerHTML = '3.' + resultArray.join(' ');
     elementCounter.innerHTML = counter;
 }

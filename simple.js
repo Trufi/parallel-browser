@@ -6,12 +6,15 @@ elementButton.addEventListener('click', function() {
     document.body.appendChild(counter);
 
     var text = document.createElement('div');
-    text.style.wordBreak = 'break-all';
     document.body.appendChild(text);
     text.innerHTML = '3.';
 
+    timeStart();
+
     for (var i = 0; i < parseInt(elementNumber.value, 10); i++) {
-        text.innerHTML += String(calc(i)).slice(0, 1);
+        text.innerHTML += String(calc(i)).slice(0, 1) + ' ';
         counter.innerHTML = i;
     }
+
+    console.log(timeEnd());
 });

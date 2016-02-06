@@ -3,17 +3,24 @@
     <head>
         <meta charset="utf-8">
         <title>Parallel Example</title>
+        <style>
+            body {
+                font-family: monospace;
+            }
+        </style>
     </head>
     <body>
         <div>
-            <input type="text" id="number" value="10000">
+            <input type="text" id="number" value="1500">
             <input type="button" id="button" value="go!">
         </div>
         <div id="text"></div>
-        <canvas id="preloader" width="300" height="300"></canvas>
+        <canvas id="preloader" width="200" height="200"></canvas>
 
-        <script src="./parallel.js"></script>
+        <script src="./utils/pi.js"></script>
+        <script src="./utils/time.js"></script>
+        <script src="./utils/parallel.js"></script>
         <script src="./p-worker.js"></script>
-        <script src="./preloader.js"></script>
+        <script src="./utils/preloader.js"></script>
     </body>
 </html>
