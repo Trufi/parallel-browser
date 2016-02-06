@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Worker GPGPU Example</title>
+        <style>
+            body {
+                font-family: monospace;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Worker GPGPU Example</h1>
+        <div>
+            <input type="text" id="number" value="1500">
+            <input type="button" id="button" value="go!">
+        </div>
+        <div id="text"></div>
+        <canvas id="preloader" width="200" height="200"></canvas>
+        <div id="elementCounter"></div>
+        <div id="elementTime"></div>
+        <div id="elementAssert"></div>
+        <div id="elementResult"></div>
+
+        <script src="../utils/assert.js"></script>
+        <script src="../utils/time.js"></script>
+        <!-- <script src="./gpgpu.js"></script> -->
+        <script src="./index.js"></script>
+        <script src="../utils/preloader.js"></script>
+    </body>
+</html>
