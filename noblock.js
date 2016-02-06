@@ -8,7 +8,8 @@ elementButton.addEventListener('click', function() {
 
     var text = document.createElement('div');
     document.body.appendChild(text);
-    text.innerHTML = '3.';
+
+    var str = '3.';
 
     var count = 1;
 
@@ -16,11 +17,13 @@ elementButton.addEventListener('click', function() {
 
     UnblockingFor(i => {
         for (var j = 0; j < count; j++) {
-            text.innerHTML += String(calc(i + j)).slice(0, 1) + ' ';
+            str += String(calc(i + j)).slice(0, 1) + ' ';
+            text.innerHTML = str;
         }
-        counter.innerHTML = i;
+        counter.innerHTML = i + 1;
     }, parseInt(elementNumber.value, 10), count, function() {
         console.log(timeEnd());
+        console.log(assert(str));
     });
 });
 

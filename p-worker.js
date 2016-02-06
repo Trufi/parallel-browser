@@ -18,20 +18,9 @@ var workerCount = 0;
 elementButton.addEventListener('click', function() {
     resultCount = parseInt(elementNumber.value, 10);
 
-    for (var i = 0; i < resultCount; i++) {
-        resultArray[i] = '-';
-    }
-
-    run();
-});
-
-function run() {
     timeStart();
-
-    for (var i = 0; i < maxWorkers; i++) {
-        spawnWorker();
-    }
-}
+    spawnWorker();
+});
 
 function workerFunction(number) {
     var count = 100;
@@ -41,39 +30,31 @@ function workerFunction(number) {
         res += calc(i + number).slice(0, 1);
     }
 
-    return {
-        data: res,
-        index: number,
-        count: count
-    };
+    return res;
 }
 
 function spawnWorker() {
-    var worker = new Parallel(workerCount * numbersPerWorker);
+    var array = [];
+
+    for (var i = 0; i < Math.ceil(resultCount / numbersPerWorker); i++) {
+        array[i] = i * numbersPerWorker;
+    }
+
+    var worker = new Parallel(array, {
+        maxWorkers: maxWorkers
+    });
     worker
         .require(calc)
-        .spawn(workerFunction)
+        .map(workerFunction)
         .then(workerDone);
-
-    workerCount++;
 }
 
 function workerDone(res) {
-    for (var i = 0; i < res.count; i++) {
-        resultArray[res.index + i] = res.data[i];
-    }
+    console.log(timeEnd());
+    var resultArray = res.join('').split('');
+    var str = '3.' + resultArray.join(' ');
+    text.innerHTML = str;
+    elementCounter.innerHTML = resultArray.length;
 
-    counter += res.count;
-
-    if (workerCount * numbersPerWorker < resultCount) {
-        spawnWorker();
-    }
-
-    if (counter >= resultCount) {
-        console.log(timeEnd());
-    }
-
-    text.innerHTML = '3.' + resultArray.join(' ');
-    elementCounter.innerHTML = counter;
-    textNumber.innerHTML += res + ' ';
+    console.log(assert(str));
 }

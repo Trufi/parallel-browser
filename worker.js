@@ -6,7 +6,8 @@ document.body.appendChild(elementCounter);
 
 var text = document.createElement('div');
 document.body.appendChild(text);
-text.innerHTML = '3.';
+
+var str = '3.';
 
 var numbersPerWorker = 100;
 var resultArray = [];
@@ -45,11 +46,11 @@ var workerCode = calc.toString() +
                 res += calc(i + number).slice(0, 1);
             }
 
-            postMessage(JSON.stringify({
+            postMessage({
                 data: res,
                 index: number,
                 count: count
-            }));
+            });
         };
     }).toString().slice(13, -2);
 
@@ -67,7 +68,7 @@ function spawnWorker() {
 }
 
 function workerMessage(ev) {
-    var res = JSON.parse(ev.data);
+    var res = ev.data;
 
     for (var i = 0; i < res.count; i++) {
         resultArray[res.index + i] = res.data[i];
@@ -81,10 +82,13 @@ function workerMessage(ev) {
         spawnWorker();
     }
 
+    str = '3.' + resultArray.join(' ');
+
     if (counter >= resultCount) {
         console.log(timeEnd());
+        console.log(assert(str));
     }
 
-    text.innerHTML = '3.' + resultArray.join(' ');
+    text.innerHTML = str;
     elementCounter.innerHTML = counter;
 }

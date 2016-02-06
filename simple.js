@@ -7,14 +7,17 @@ elementButton.addEventListener('click', function() {
 
     var text = document.createElement('div');
     document.body.appendChild(text);
-    text.innerHTML = '3.';
 
     timeStart();
 
+    var str = '3.';
+
     for (var i = 0; i < parseInt(elementNumber.value, 10); i++) {
-        text.innerHTML += String(calc(i)).slice(0, 1) + ' ';
-        counter.innerHTML = i;
+        str += String(calc(i)).slice(0, 1) + ' ';
+        text.innerHTML = str;
+        counter.innerHTML = i + 1;
     }
 
     console.log(timeEnd());
+    console.log(assert(str));
 });
