@@ -1,23 +1,21 @@
 var elementButton = document.querySelector('#button');
 var elementNumber = document.querySelector('#number');
+var elementCounter = document.querySelector('#elementCounter');
+var elementResult = document.querySelector('#elementResult');
+var elementTime = document.querySelector('#elementTime');
+var elementAssert = document.querySelector('#elementAssert');
 
 elementButton.addEventListener('click', function() {
-    var counter = document.createElement('div');
-    document.body.appendChild(counter);
-
-    var text = document.createElement('div');
-    document.body.appendChild(text);
-
     timeStart();
 
     var str = '3.';
 
     for (var i = 0; i < parseInt(elementNumber.value, 10); i++) {
         str += String(calc(i)).slice(0, 1) + ' ';
-        text.innerHTML = str;
-        counter.innerHTML = i + 1;
+        elementResult.innerHTML = str;
+        elementCounter.innerHTML = i + 1;
     }
 
-    console.log(timeEnd());
-    console.log(assert(str));
+    elementTime.innerHTML = 'Time: ' + timeEnd() + 'ms';
+    elementAssert.innerHTML = 'Equivalence: ' + assert(str);
 });

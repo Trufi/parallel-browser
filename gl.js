@@ -1,9 +1,13 @@
 var elementButton = document.querySelector('#button');
 var elementNumber = document.querySelector('#number');
+var elementCounter = document.querySelector('#elementCounter');
+var elementResult = document.querySelector('#elementResult');
+var elementTime = document.querySelector('#elementTime');
+var elementAssert = document.querySelector('#elementAssert');
 
 var loadShaderCode = new Promise(function(resolve) {
     var req = new XMLHttpRequest();
-    req.open('GET', './shader.glsl', true);
+    req.open('GET', './utils/pi.glsl', true);
     req.onreadystatechange = function() {
         if (req.readyState == 4) {
             resolve(req.responseText);
@@ -13,14 +17,7 @@ var loadShaderCode = new Promise(function(resolve) {
 });
 
 elementButton.addEventListener('click', function() {
-    var counter = document.createElement('div');
-    document.body.appendChild(counter);
-
-    var text = document.createElement('div');
-    document.body.appendChild(text);
-
     var value = parseInt(elementNumber.value, 10);
-
     var data = new Float32Array(value);
 
     for (var i = 0; i < data.length; i++) {
@@ -35,7 +32,7 @@ elementButton.addEventListener('click', function() {
             fullCode: true
         });
 
-        console.log(timeEnd());
+        elementTime.innerHTML = 'Time: ' + timeEnd() + 'ms';
 
         var hx = '0123456789ABCDEF';
         var str = '3.';
@@ -44,9 +41,8 @@ elementButton.addEventListener('click', function() {
             str += hx[res[i]] + ' ';
         }
 
-        text.innerHTML = str;
-        counter.innerHTML = res.length;
-
-        console.log(assert(str));
+        elementResult.innerHTML = str;
+        elementCounter.innerHTML = res.length;
+        elementAssert.innerHTML = 'Equivalence: ' + assert(str);
     });
 });

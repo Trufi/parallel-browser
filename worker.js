@@ -1,14 +1,11 @@
 var elementButton = document.querySelector('#button');
 var elementNumber = document.querySelector('#number');
-
-var elementCounter = document.createElement('div');
-document.body.appendChild(elementCounter);
-
-var text = document.createElement('div');
-document.body.appendChild(text);
+var elementCounter = document.querySelector('#elementCounter');
+var elementResult = document.querySelector('#elementResult');
+var elementTime = document.querySelector('#elementTime');
+var elementAssert = document.querySelector('#elementAssert');
 
 var str = '3.';
-
 var numbersPerWorker = 100;
 var resultArray = [];
 var counter = 0;
@@ -88,10 +85,10 @@ function workerMessage(ev) {
     str = '3.' + resultArray.join(' ');
 
     if (counter >= resultCount) {
-        console.log(timeEnd());
-        console.log(assert(str));
+        elementTime.innerHTML = 'Time: ' + timeEnd() + 'ms';
+        elementAssert.innerHTML = 'Equivalence: ' + assert(str);
     }
 
-    text.innerHTML = str;
+    elementResult.innerHTML = str;
     elementCounter.innerHTML = counter;
 }

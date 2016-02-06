@@ -20,8 +20,7 @@ var indexArray = [
 ];
 
 var canvas = document.createElement('canvas');
-var gl = canvas.getContext('webgl');
-// gl.viewport(0, 0, 64, 64);
+var gl = canvas.getContext('webgl', {alpha: false, depth: false, antialias: false});
 
 if (!gl.getExtension('OES_texture_float')) {
     throw new Error('Requires OES_texture_float extension');
@@ -102,13 +101,6 @@ function createTexture(data, size, dimension) {
                 if (i % 4 < dimension) {
                     textureData[i] = data[counter];
                     counter++;
-                    // d = 1
-                    // 0 1 2 3
-                    // 0 4 8 12
-
-                    // d = 2
-                    // 0 1 2 3
-                    // 0 1 4 5
                 }
             }
         }
@@ -155,7 +147,7 @@ function frameBufferIsComplete() {
         value = false;
     }
 
-    return {isComplete: value, message: message};
+    return {value: value, message: message};
 }
 
 window.gpgpu = function(code, data, options) {
@@ -197,7 +189,10 @@ window.gpgpu = function(code, data, options) {
     gl.bindFramebuffer(gl.FRAMEBUFFER, frameBuffer);
     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, frameTexture, 0);
 
-    console.log(frameBufferIsComplete());
+    var frameBufferStatus = frameBufferIsComplete();
+    if (!frameBufferStatus.value) {
+        console.log(frameBufferStatus.message);
+    }
 
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.activeTexture(gl.TEXTURE0);

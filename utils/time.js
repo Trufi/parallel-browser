@@ -14,6 +14,7 @@
     };
 
     window.timeEnd = function() {
-        return time() - startTime;
+        var delta = time() - startTime;
+        return Math.round(delta * 1000) / 1000;
     };
 })();

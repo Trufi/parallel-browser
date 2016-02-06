@@ -1,29 +1,26 @@
 var elementButton = document.querySelector('#button');
 var elementNumber = document.querySelector('#number');
-var textNumber = document.querySelector('#text');
+var elementCounter = document.querySelector('#elementCounter');
+var elementResult = document.querySelector('#elementResult');
+var elementTime = document.querySelector('#elementTime');
+var elementAssert = document.querySelector('#elementAssert');
 
 elementButton.addEventListener('click', function() {
-    var counter = document.createElement('div');
-    document.body.appendChild(counter);
-
-    var text = document.createElement('div');
-    document.body.appendChild(text);
-
     var str = '3.';
-
     var count = 1;
+    var value = parseInt(elementNumber.value, 10);
 
     timeStart();
 
     UnblockingFor(i => {
         for (var j = 0; j < count; j++) {
             str += String(calc(i + j)).slice(0, 1) + ' ';
-            text.innerHTML = str;
+            elementResult.innerHTML = str;
         }
-        counter.innerHTML = i + 1;
-    }, parseInt(elementNumber.value, 10), count, function() {
-        console.log(timeEnd());
-        console.log(assert(str));
+        elementCounter.innerHTML = i + 1;
+    }, value, count, function() {
+        elementTime.innerHTML = 'Time: ' + timeEnd() + 'ms';
+        elementAssert.innerHTML = 'Equivalence: ' + assert(str);
     });
 });
 

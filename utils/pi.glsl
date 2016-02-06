@@ -1,7 +1,7 @@
 #define ntp 25
 #define eps 1e-17
 #define NHX 16
-#define MAX_ID 5000
+#define MAX_ID 15000
 
 precision mediump float;
 uniform sampler2D u_texture;
