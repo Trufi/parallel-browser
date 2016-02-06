@@ -3,5 +3,5 @@
 
     window.assert = function(str) {
         return pi.slice(0, str.length) == str;
-    }
+    };
 })();

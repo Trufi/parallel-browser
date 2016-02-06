@@ -7,7 +7,7 @@ function calc(id) {
     pid = 4 * s1 - 2 * s2 - s3 - s4;
     pid = pid - floor(pid) + 1;
 
-    var NHX = 16
+    var NHX = 16;
     var chx = new Array([NHX]);
     ihex(pid, NHX, chx);
 
@@ -28,7 +28,7 @@ function calc(id) {
     }
 
     function series(m, id) {
-        var k, ak, eps, p, s, t;
+        var k, ak, p, s, t;
         var eps = Number.EPSILON;//1e-17;
         s = 0;
 
@@ -54,7 +54,7 @@ function calc(id) {
     }
 
     function expm(p, ak) {
-        var i, j, p1, p2, r;
+        var i, j, p1, pt, r;
         var ntp = 25;
         var tp1 = 0;
         var tp = new Array(ntp);
