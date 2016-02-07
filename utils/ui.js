@@ -15,7 +15,7 @@
             }
 
             if ('counter' in data) {
-                elementCounter.innerHTML = data.counter;
+                elementCounter.innerHTML = 'Count: ' + data.counter;
             }
 
             if ('time' in data) {
@@ -29,7 +29,7 @@
 
         reset: function() {
             elementResult.innerHTML = '';
-            elementCounter.innerHTML = '';
+            elementCounter.innerHTML = 'Count: ?';
             elementTime.innerHTML = 'Time: ?';
             elementAssert.innerHTML = 'Equel: ?';
         },

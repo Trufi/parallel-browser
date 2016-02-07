@@ -1,0 +1,13 @@
+body {
+    margin: 0 auto;
+    width: 1000px;
+    font-family: monospace;
+}
+
+#elementCounter,
+#elementTime,
+#elementAssert {
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 700;
+}
