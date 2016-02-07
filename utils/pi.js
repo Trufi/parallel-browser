@@ -1,4 +1,4 @@
-function calc(id) {
+function pi(id) {
     var pid, s1, s2, s3, s4;
     s1 = series(1, id);
     s2 = series(4, id);
@@ -8,26 +8,26 @@ function calc(id) {
     pid = pid - floor(pid) + 1;
 
     var NHX = 16;
-    var chx = new Array([NHX]);
-    ihex(pid, NHX, chx);
+    //var chx = new Array([NHX]);
+    //ihex(pid, NHX, chx);
 
     function floor(x) {
         return x < 0 ? Math.ceil(x) : Math.floor(x);
     }
 
-    function ihex(x, nhx, chx) {
-        var i, y;
-        var hx = '0123456789ABCDEF';
-
-        y = Math.abs(x);
-        // y = 16 * (y - Math.floor(y));
-        // chx[0] = hx[floor(y)];
-
-        for (i = 0; i < nhx; i++){
-            y = 16 * (y - Math.floor(y));
-            chx[i] = hx[floor(y)];
-        }
-    }
+    // function ihex(x, nhx, chx) {
+    //     var i, y;
+    //     var hx = '0123456789ABCDEF';
+    //
+    //     y = Math.abs(x);
+    //     // y = 16 * (y - Math.floor(y));
+    //     // chx[0] = hx[floor(y)];
+    //
+    //     for (i = 0; i < nhx; i++){
+    //         y = 16 * (y - Math.floor(y));
+    //         chx[i] = hx[floor(y)];
+    //     }
+    // }
 
     function series(m, id) {
         var k, ak, p, s, t;
@@ -101,5 +101,9 @@ function calc(id) {
         return r;
     }
 
-    return chx;
+    var hx = '0123456789ABCDEF';
+    y = Math.abs(pid);
+    y = 16 * (y - Math.floor(y));
+
+    return hx[floor(y)];
 }

@@ -1,26 +1,18 @@
-var elementButton = document.querySelector('#button');
-var elementNumber = document.querySelector('#number');
-var elementCounter = document.querySelector('#elementCounter');
-var elementResult = document.querySelector('#elementResult');
-var elementTime = document.querySelector('#elementTime');
-var elementAssert = document.querySelector('#elementAssert');
-
-elementButton.addEventListener('click', function() {
+window.ui.onSubmit(function(value) {
     var str = '3.';
     var count = 1;
-    var value = parseInt(elementNumber.value, 10);
 
     timeStart();
 
     UnblockingFor(i => {
         for (var j = 0; j < count; j++) {
-            str += String(calc(i + j)).slice(0, 1) + ' ';
-            elementResult.innerHTML = str;
+            str += pi(i + j) + ' ';
+
+            window.ui.update({result: str});
         }
-        elementCounter.innerHTML = i + 1;
+        window.ui.update({counter: i + 1});
     }, value, count, function() {
-        elementTime.innerHTML = 'Time: ' + timeEnd() + 'ms';
-        elementAssert.innerHTML = 'Equivalence: ' + assert(str);
+        window.ui.update({time: timeEnd(), equel: assert(str)});
     });
 });
 

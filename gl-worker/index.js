@@ -1,10 +1,3 @@
-var elementButton = document.querySelector('#button');
-var elementNumber = document.querySelector('#number');
-var elementCounter = document.querySelector('#elementCounter');
-var elementResult = document.querySelector('#elementResult');
-var elementTime = document.querySelector('#elementTime');
-var elementAssert = document.querySelector('#elementAssert');
-
 var loadShaderCode = new Promise(function(resolve) {
     var req = new XMLHttpRequest();
     req.open('GET', '../utils/pi.glsl', true);
@@ -30,15 +23,17 @@ worker.addEventListener('message', function(ev) {
 
     for (var i = 0; i < res.length; i++) {
         str += hx[res[i]] + ' ';
-    }
+    }    
 
-    elementResult.innerHTML = str;
-    elementCounter.innerHTML = res.length;
-    elementAssert.innerHTML = 'Equivalence: ' + assert(str);
+    window.ui.update({
+        result: str,
+        counter: res.length,
+        time: timeEnd(),
+        equel: assert(str)
+    });
 });
 
-elementButton.addEventListener('click', function() {
-    var value = parseInt(elementNumber.value, 10);
+window.ui.onSubmit(function(value) {
     var data = new Float32Array(value);
 
     for (var i = 0; i < data.length; i++) {

@@ -1,16 +1,9 @@
-var elementButton = document.querySelector('#button');
-var elementNumber = document.querySelector('#number');
-var elementCounter = document.querySelector('#elementCounter');
-var elementResult = document.querySelector('#elementResult');
-var elementTime = document.querySelector('#elementTime');
-var elementAssert = document.querySelector('#elementAssert');
-
 var resultCount;
 var numbersPerWorker = 100;
 var maxWorkers = 8;
 
-elementButton.addEventListener('click', function() {
-    resultCount = parseInt(elementNumber.value, 10);
+window.ui.onSubmit(function(value) {
+    resultCount = value;
     timeStart();
     spawnWorker();
 });
@@ -20,7 +13,7 @@ function workerFunction(number) {
     var res = '';
 
     for (var i = 0; i < count; i++) {
-        res += calc(i + number).slice(0, 1);
+        res += pi(i + number);
     }
 
     return res;
@@ -35,7 +28,7 @@ function spawnWorker() {
     new Parallel(array, {
         maxWorkers: maxWorkers
     })
-        .require(calc)
+        .require(pi)
         .map(workerFunction)
         .then(workerDone);
 }
@@ -46,8 +39,10 @@ function workerDone(res) {
     var resultArray = res.join('').split('');
     var str = '3.' + resultArray.join(' ');
 
-    elementResult.innerHTML = str;
-    elementCounter.innerHTML = resultArray.length;
-    elementTime.innerHTML = 'Time: ' + time + 'ms';
-    elementAssert.innerHTML = 'Equivalence: ' + assert(str);
+    window.ui.update({
+        result: str,
+        counter: resultArray.length,
+        time: timeEnd(),
+        equel: assert(str)
+    });
 }
