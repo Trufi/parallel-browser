@@ -12,6 +12,16 @@ window.ui.onSubmit(function(value) {
     window.ui.update({time: timeEnd(), equel: assert(str)});
 });
 
+
+
+
+
+
+
+
+
+
+
 // var wrapasmpi = Module.cwrap('calcpi', 'number', ['number']);
 // var hx = '0123456789ABCDEF';
 //

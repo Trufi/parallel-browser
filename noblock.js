@@ -1,17 +1,17 @@
 window.ui.onSubmit(function(value) {
     var str = '3.';
-    var count = 1;
+    var numberAtOnce = 1;
 
     timeStart();
 
     UnblockingFor(i => {
-        for (var j = 0; j < count; j++) {
+        for (var j = 0; j < numberAtOnce; j++) {
             str += pi(i + j) + ' ';
 
             window.ui.update({result: str});
         }
         window.ui.update({counter: i + 1});
-    }, value, count, function() {
+    }, value, numberAtOnce, function() {
         window.ui.update({time: timeEnd(), equel: assert(str)});
     });
 });

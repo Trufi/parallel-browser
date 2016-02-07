@@ -58,14 +58,6 @@ function spawnWorker() {
 }
 
 function workerMessage(ev) {
-    var res = ev.data;
-
-    for (var i = 0; i < res.count; i++) {
-        resultArray[res.index + i] = res.data[i];
-    }
-
-    counter += res.count;
-
     var worker = ev.target;
 
     if (workerCount * numbersPerWorker < resultCount) {
@@ -74,6 +66,14 @@ function workerMessage(ev) {
     } else {
         worker.terminate();
     }
+    
+    var res = ev.data;
+
+    for (var i = 0; i < res.count; i++) {
+        resultArray[res.index + i] = res.data[i];
+    }
+
+    counter += res.count;
 
     str = '3.' + resultArray.join(' ');
 

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Shower Presentation Engine</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen-16x10.css">
+    <link rel="stylesheet" href="shower/monokai_sublime.css">
+    <script src="shower/highlight.pack.js"></script>
+</head>
+<body class="shower full">
+	<header class="caption">
+		<h1>Shower Presentation Engine</h1>
+		<p>Yours Truly, Famous Inc.</p>
+	</header>
+	<section class="slide" id="cover">
+		<h2>Бесконечность и предел</h2>
+		<p>Мстислав Живодков</p>
+		<p>@Trufid</p>
+		<img src="pictures/4.jpg" alt="" class="cover w">
+		<style>
+			#cover h2 {
+				color: #fff;
+				text-align: right;
+				font-size: 55px;
+			}
+			#cover p {
+				color: #fff;
+				text-align: right;
+				font-size: 25px;
+				line-height: 25px;
+				font-style: italic;
+				margin-bottom: 10px;
+			}
+		</style>
+	</section>
+	<section class="slide">
+		<h2>Часто возникающая медленная задача</h2>
+		<ul>
+			<li>Вычисление до n-го знака после запятой</li>
+			<li>Числа Пи</li>
+			<li>В шестнадцатеричной форме</li>
+		</ul>
+		<div style="position: relative;">
+			<img src="pictures/s2.jpg" style="height: 255px; position: absolute; left: 212px; top: -40px; opacity: 0.7;" alt="">
+			<p style="font-size: 20px; position: absolute;">
+				3.2 4 3 F 6 A 8 8 8 5 A 3 0 8 D 3 1 3 1 9 8 A 2 E 0 3 7 0 7 3 4 4 A 4 0 9 3 8 2 2 2 9 9 F 3 1 D 0 0 8 2 E F A 9 8 E C 4 E 6 C 8 9 4 5 2 8 2 1 E 6 3 8 D 0 1 3 7 7 B E 5 4 6 6 C F 3 4 E 9 0 C 6 C C 0 A C 2 9 B 7 C 9 7 C 5 0 D D 3 F 8 4 D 5 B 5 B 5 4 7 0 9 1 7 9 2 1 6 D 5 D 9 8 9 7 9 F B 1 B D 1 3 1 0 B A 6 9 8 D F B 5 A C 2 F F D 7 2 D B D 0 1 A D F B 7 B 8 E 1 A F E D 6 A 2 6 7 E 9 6 B A 7 C 9 0 4 5 F 1 2 C 7 F 9 9 2 4 A 1 9 9 4 7 B 3 9 1 6 C F 7 0 8 0 1 F 2 E 2 8 5 8 E F C 1 6 6 3 6 9 2 0 D
+			</p>
+		</div>
+	</section>
+	<section class="slide">
+		<h2>BBP Formula</h2>
+		<img src="pictures/1.png" alt="" style="width: 700px;">
+		<ul>
+			<li>Формула позволяет найти любую цифру числа Пи без необходимости вычисления предыдущих</li>
+			<li>Формула была впервые открыта в 1995 году Саймоном Плаффом</li>
+			<li>Называется в честь авторов статьи, где формула была впервые опубликована, Дэвида Бэйли, Питера Боруэйна и Саймона Плаффа</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Пример 1: простой <a style="font-size: 40px;" href="https://trufi.github.io/parallel-browser/simple.html">Link</a></h2>
+		<img src="pictures/7.jpg" alt="" style="width: 824px;">
+	</section>
+	<section class="slide">
+		<h2>Пример 2: посложнее <a style="font-size: 40px;" href="https://trufi.github.io/parallel-browser/noblock.html">Link</a></h2>
+		<p>Используем <code>setTimeout</code> на каждый шаг</p>
+		<img src="pictures/1.gif" alt="" style="width: 824px;">
+	</section>
+	<section class="slide">
+		<h2>Use the Force</h2>
+		<ul style="font-size: 35px;">
+			<li>Worker</li>
+			<li>Shared Worker</li>
+			<li style="text-decoration: line-through;">Service Worker</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Worker</h2>
+		<img src="pictures/8.jpg" alt="">
+		<ul>
+			<li>new Worker(url), можно использовать Blob</li>
+			<li>postMessage(data, ...)</li>
+			<li>onmessage(ev)</li>
+			<li>terminate()</li>
+			<li>importScripts(url, ...)</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Пример 3: уже лучше <a style="font-size: 40px;" href="https://trufi.github.io/parallel-browser/worker.html">Link</a></h2>
+		<img src="pictures/6.jpg" alt="" style="width: 824px;">
+	</section>
+	<section class="slide" style="position: relative;">
+		<h2>Parallel.js</h2>
+		<ul>
+			<li>new Parallel(data)</li>
+			<li>require(name)</li>
+			<li>spawn(fn)</li>
+			<li>map(fn)</li>
+			<li>then(fn)</li>
+		</ul>
+		<div style="position: absolute; top: 135px; right: 160px;">
+		<pre><code>
+new Parallel(array)
+	.require(pi)
+	.map(workerFunction)
+	.then(workerDone);
+		</code></pre>
+		</div>
+	</section>
+	<section class="slide">
+		<h2>Пример 4: намного проще <a style="font-size: 40px;" href="https://trufi.github.io/parallel-browser/p-worker.html">Link</a></h2>
+		<img src="pictures/3.jpg" alt="" style="width: 824px;">
+	</section>
+	<section class="slide">
+		<h2>А ещё быстрее?</h2>
+		<img src="pictures/2.png" alt="" style="width: 824px;">
+	</section>
+	<section class="slide">
+		<h2>asm.js и wasm</h2>
+		<div style="font-size: 30px; font-weight: 700;">wasm</div>
+		<ul>
+			<li>Бинарный формат</li>
+			<li>AST</li>
+			<li>Только в черновиках</li>
+			<li>Ещё нет реализации</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>asm.js и wasm</h2>
+		<div style="font-size: 30px; font-weight: 700;">asm.js</div>
+		<ul>
+			<li>Подмножество javascript</li>
+			<li>Из-за wasm будущего нет</li>
+			<li>Реализован в firefox, edge, chrome. Итого: 58%</li>
+			<li>Из С/С++ с помощью ecmscripten</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Пример 5: асм джс <a style="font-size: 40px;" href="https://trufi.github.io/parallel-browser/asm">Link</a></h2>
+		<img src="pictures/5.jpg" alt="" style="width: 824px;">
+	</section>
+	<section class="slide">
+		<h2>WebGL</h2>
+		<img src="pictures/2.gif" alt="" style="width: 750px;">
+	</section>
+	<section class="slide">
+		<h2>WebGL</h2>
+		<ul>
+			<li>Работает очень быстро</li>
+			<li>Задействует видеокарту</li>
+			<li>Чем больше можно распараллелить - тем лучше</li>
+			<li>Но есть много ограничений</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2>Пример 6: WebGL <a style="font-size: 40px;" href="https://trufi.github.io/parallel-browser/gl.html">Link</a></h2>
+		<img src="pictures/9.jpg" alt="" style="width: 824px;">
+	</section>
+	<div class="progress"></div>
+	<script src="shower/shower.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
