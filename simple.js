@@ -19,3 +19,10 @@ elementButton.addEventListener('click', function() {
     elementTime.innerHTML = 'Time: ' + timeEnd() + 'ms';
     elementAssert.innerHTML = 'Equivalence: ' + assert(str);
 });
+
+// var wrapasmpi = Module.cwrap('calcpi', 'number', ['number']);
+// var hx = '0123456789ABCDEF';
+//
+// function asmpi(i) {
+//     return hx[wrapasmpi(i)];
+// }

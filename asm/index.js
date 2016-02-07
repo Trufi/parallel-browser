@@ -31,33 +31,8 @@ function run() {
     }
 }
 
-var workerCode = calc.toString() +
-    (function() {
-        onmessage = function(ev) {
-            var number = parseInt(ev.data, 10);
-
-            var count = 100;
-            var res = '';
-
-            for (var i = 0; i < count; i++) {
-                res += calc(i + number).slice(0, 1);
-            }
-
-            postMessage({
-                data: res,
-                index: number,
-                count: count
-            });
-        };
-    }).toString().slice(13, -2);
-
 function spawnWorker() {
-    var blob = new Blob(
-       [workerCode],
-       {type: 'text/javascript'}
-    );
-    var url = window.URL.createObjectURL(blob);
-    var worker = new Worker(url);
+    var worker = new Worker('./worker.js');
     worker.postMessage(workerCount * numbersPerWorker);
 
     worker.addEventListener('message', workerMessage);
