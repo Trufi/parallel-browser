@@ -11,3 +11,7 @@ body {
     font-size: 14px;
     font-weight: 700;
 }
+
+#fps {
+    margin-left: 60px;
+}
