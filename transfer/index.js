@@ -2,12 +2,19 @@ console.time('workerCreate');
 console.time('workerAnswer');
 
 var worker = new Worker('./worker.js');
+
 worker.postMessage({
     text: 'Hello World!',
-    obj: giantTyped.buffer
-}, [
-    giantTyped.buffer
-]);
+    obj: giant
+});
+
+
+// worker.postMessage({
+//     text: 'Hello World!',
+//     obj: giantTyped.buffer
+// }, [
+//     giantTyped.buffer
+// ]);
 
 console.timeEnd('workerCreate');
 
