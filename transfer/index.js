@@ -8,6 +8,15 @@ worker.postMessage({
     obj: giant
 });
 
+console.timeEnd('workerCreate');
+
+worker.addEventListener('message', function(ev) {
+    console.timeEnd('workerAnswer');
+    console.log(ev.data);
+});
+
+
+
 
 // worker.postMessage({
 //     text: 'Hello World!',
@@ -15,10 +24,3 @@ worker.postMessage({
 // }, [
 //     giantTyped.buffer
 // ]);
-
-console.timeEnd('workerCreate');
-
-worker.addEventListener('message', function(ev) {
-    console.timeEnd('workerAnswer');
-    console.log(ev.data);
-});
