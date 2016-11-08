@@ -7,11 +7,12 @@ precision mediump float;
 uniform sampler2D u_texture;
 varying vec2 v_texture;
 
+int tp1 = 0;
+float tp[ntp];
+
 float expm (float p, float ak) {
   int i, j;
   float p1, pt, r;
-  float tp[ntp];
-  int tp1 = 0;
 
   if (tp1 == 0) {
     tp1 = 1;

@@ -2,11 +2,12 @@ window.ui.onSubmit(function(value) {
     timeStart();
 
     var str = '3.';
+    var main = asm.main;
 
     var hx = '0123456789ABCDEF';
 
     for (var i = 0; i < value; i++) {
-        str += hx[asm.main(i)] + ' ';
+        str += hx[main(i)] + ' ';
 
         window.ui.update({result: str, counter: i + 1});
     }
@@ -14,13 +15,16 @@ window.ui.onSubmit(function(value) {
     window.ui.update({time: timeEnd(), equel: assert(str)});
 });
 
-var asm = (function(stdlib, foreign, buffer) {
+var asm = (function(stdlib, foreign, heap) {
     'use asm';
 
-    var i32 = new stdlib.Int32Array(buffer);
-    var imul = stdlib.Math.imul;
+    var f64 = new stdlib.Float64Array(heap);
     var pow = stdlib.Math.pow;
     var abs = stdlib.Math.abs;
+    var floor = stdlib.Math.floor;
+
+    var eps = 1.0e-17;
+    var tp1 = 0;
 
     function main(id) {
         id = id |0;
@@ -42,37 +46,38 @@ var asm = (function(stdlib, foreign, buffer) {
         y = abs(pid);
         y = 16.0 * (y - (+(~~y)));
 
-        return ~~y;
+        return ~~y |0;
     }
 
-    function series(m, id) {
-        m = m |0;
+    function series(ma, id) {
+        ma = ma |0;
         id = id |0;
 
         var k = 0;
-        var ak = 0;
-        var p = 0;
-        var t1 = 0;
+        var ak = 0.0;
+        var p = 0.0;
+        var m = 0.0;
 
         var s = 0.0;
-        var t2 = 0.0;
-        var eps = 1.0e-17;
+        var t = 0.0;
 
-        for (k = 0; (k |0) < (id |0); k = k + 1 |0) {
-            ak = imul(8, k) + m |0;
-            p = id - k |0;
-            t1 = expm(p, ak) |0;
+        m = +(ma |0);
+
+        for (k; (k |0) < (id |0); k = k + 1 |0) {
+            ak = 8.0 * (+(k |0)) + m;
+            p = +(id - k |0);
+            t = +expm(p, ak);
             s = s - (+(~~s));
-            s = s + (+(t1 |0)) / (+(ak |0));
+            s = s + t / ak;
         }
 
         for (k = id; (k |0) <= (id + 100 |0); k = k + 1 |0) {
-            ak = imul(8, k) + m |0;
-            t2 = +pow(16.0, +(id - k |0)) / +(ak |0);
-            if (t2 < eps) {
+            ak = 8.0 * (+(k |0)) + m;
+            t = +pow(16.0, +(id - k |0)) / ak;
+            if (t < eps) {
                 break;
             }
-            s = s + t2;
+            s = s + t;
             s = s - (+(~~s));
         }
 
@@ -80,56 +85,56 @@ var asm = (function(stdlib, foreign, buffer) {
     }
 
     function expm(p, ak) {
-        p = p |0;
-        ak = ak |0;
+        p = +p;
+        ak = +ak;
 
         var i = 0;
         var j = 0;
+
         var p1 = 0.0;
         var pt = 0.0;
-        var r = 0;
+        var r = 0.0;
 
         var ntp = 100; // 25 * 4
-        var tp1 = 0;
 
         if ((tp1 |0) == 0) {
             tp1 = 1;
-            i32[0] = 1;
+            f64[0] = 1.0;
 
-            for (i = 4; (i |0) < (ntp |0); i = i + 4 |0) {
-                i32[i >>2] = 2 * (i32[i - 4 >>2] |0);
+            for (i = 1; (i |0) < (ntp |0); i = i + 1 |0) {
+                f64[i << 3 >>3] = 2.0 * (+(f64[(i - 1) << 3 >>3]));
             }
         }
 
-        if ((ak |0) == 1) {
-            return 0;
+        if (ak == 1.0) {
+            return +0.0;
         }
 
-        for (i = 0; (i |0) < (ntp |0); i = i + 4 |0) {
-            if ((i32[i >>2] |0) > (p |0)) {
+        for (i = 0; (i |0) < (ntp |0); i = i + 8 |0) {
+            if (+f64[i << 3 >>3] > p) {
                 break;
             }
         }
 
-        pt = +(i32[i - 4 >>2] |0);
-        p1 = +(p |0);
-        r = 1;
+        pt = +(f64[(i - 1) << 3 >>3]);
+        p1 = p;
+        r = 1.0;
 
         for (j = 1; (j |0) < ((i + 1) |0); j = j + 1 |0) {
             if (p1 >= pt) {
-                r = 16 * r |0;
-                r = r - imul(((r |0) / (ak |0) | 0), ak) |0;
+                r = 16.0 * r;
+                r = r - (+(~~(r / ak))) * ak;
                 p1 = p1 - pt;
             }
 
             pt = 0.5 * pt;
             if (pt >= 1.0) {
-                r = imul(r, r);
-                r = r - imul(((r |0) / (ak |0) | 0), ak) |0;
+                r = r * r;
+                r = r - (+(~~(r / ak))) * ak;
             }
         }
 
-        return r |0;
+        return +r;
     }
 
     return {

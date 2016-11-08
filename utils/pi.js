@@ -1,33 +1,29 @@
-function pi(id) {
-    var pid, s1, s2, s3, s4;
-    s1 = series(1, id);
-    s2 = series(4, id);
-    s3 = series(5, id);
-    s4 = series(6, id);
-    pid = 4 * s1 - 2 * s2 - s3 - s4;
-    pid = pid - (pid | 0) + 1;
+function closure() {
+    var ntp = 25;
+    var tp1 = 0;
+    var tp = new Float64Array(ntp);
 
-    var NHX = 16;
-    //var chx = new Array([NHX]);
-    //ihex(pid, NHX, chx);
+    self.pi = function pi(id) {
+        var pid, s1, s2, s3, s4;
+        s1 = series(1, id);
+        s2 = series(4, id);
+        s3 = series(5, id);
+        s4 = series(6, id);
+        pid = 4 * s1 - 2 * s2 - s3 - s4;
+        pid = pid - (pid | 0) + 1;
 
-    // function ihex(x, nhx, chx) {
-    //     var i, y;
-    //     var hx = '0123456789ABCDEF';
-    //
-    //     y = Math.abs(x);
-    //     // y = 16 * (y - Math.floor(y));
-    //     // chx[0] = hx[floor(y)];
-    //
-    //     for (i = 0; i < nhx; i++){
-    //         y = 16 * (y - Math.floor(y));
-    //         chx[i] = hx[floor(y)];
-    //     }
-    // }
+        var NHX = 16;
+
+        var hx = '0123456789ABCDEF';
+        y = Math.abs(pid);
+        y = 16 * (y - (y | 0));
+
+        return hx[y | 0];
+    }
 
     function series(m, id) {
         var k, ak, p, s, t;
-        var eps = Number.EPSILON;//1e-17;
+        var eps = 1e-17;
         s = 0;
 
         for (k = 0; k < id; k++) {
@@ -53,9 +49,6 @@ function pi(id) {
 
     function expm(p, ak) {
         var i, j, p1, pt, r;
-        var ntp = 25;
-        var tp1 = 0;
-        var tp = new Array(ntp);
 
         if (tp1 == 0) {
             tp1 = 1;
@@ -65,7 +58,6 @@ function pi(id) {
                 tp[i] = 2 * tp[i - 1];
             }
         }
-
 
         if (ak == 1) {
             return 0;
@@ -96,10 +88,6 @@ function pi(id) {
         }
         return r;
     }
-
-    var hx = '0123456789ABCDEF';
-    y = Math.abs(pid);
-    y = 16 * (y - (y | 0));
-
-    return hx[y | 0];
 }
+
+closure();

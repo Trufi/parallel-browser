@@ -24,7 +24,7 @@ function run() {
     }
 }
 
-var workerCode = pi.toString() +
+var workerCode = closure.toString().slice(20, -1) +
     (function() {
         onmessage = function(ev) {
             var number = parseInt(ev.data, 10);
@@ -66,7 +66,7 @@ function workerMessage(ev) {
     } else {
         worker.terminate();
     }
-    
+
     var res = ev.data;
 
     for (var i = 0; i < res.count; i++) {

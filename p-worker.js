@@ -9,6 +9,8 @@ window.ui.onSubmit(function(value) {
 });
 
 function workerFunction(number) {
+    closure();
+
     var numbersPerWorker = 100;
     var res = '';
 
@@ -28,7 +30,7 @@ function spawnWorker() {
     new Parallel(array, {
             maxWorkers: maxWorkers
         })
-        .require(pi)
+        .require(closure)
         .map(workerFunction)
         .then(workerDone);
 }
