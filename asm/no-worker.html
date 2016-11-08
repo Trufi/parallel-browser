@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>asm.js no-worker example</title>
+        <link rel="stylesheet" href="../utils/style.css">
+    </head>
+    <body>
+        <h1>asm.js no-worker example</h1>
+        <div>
+            <input type="text" id="number" value="1500">
+            <input type="button" id="button" value="go!">
+        </div>
+        <canvas id="preloader" width="200" height="200"></canvas>
+        <div id="fps"></div>
+        <div id="elementCounter"></div>
+        <div id="elementTime"></div>
+        <div id="elementAssert"></div>
+        <div id="elementResult"></div>
+
+        <script src="../utils/fps.js"></script>
+        <script src="../utils/ui.js"></script>
+        <script src="../utils/time.js"></script>
+        <script src="../utils/assert.js"></script>
+        <script src="../utils/parallel.js"></script>
+        <script src="./a.out.js"></script>
+        <script src="./no-worker.js"></script>
+        <script src="../utils/preloader.js"></script>
+    </body>
+</html>
