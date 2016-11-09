@@ -1,2 +1,2 @@
 #!/bin/sh
-emcc pi.cpp -s EXPORTED_FUNCTIONS="['_calcpi']"
+emcc pi.cpp -O3 -s EXPORTED_FUNCTIONS="['_calcpi']"
