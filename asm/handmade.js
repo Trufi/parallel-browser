@@ -2,31 +2,48 @@ window.ui.onSubmit(function(value) {
     timeStart();
 
     var str = '3.';
-    var main = asm.main;
+
+    var heap = new ArrayBuffer(65536);
+    var i32 = new Int32Array(heap);
+
+    var main = asm(window, null, heap).main;
 
     var hx = '0123456789ABCDEF';
 
-    for (var i = 0; i < value; i++) {
-        str += hx[main(i)] + ' ';
+    main(value);
 
-        window.ui.update({result: str, counter: i + 1});
+    for (var i = 0; i < value; i++) {
+        str += hx[i32[500 + i]] + ' ';
     }
 
-    window.ui.update({time: timeEnd(), equel: assert(str)});
+    window.ui.update({time: timeEnd(), equel: assert(str), result: str, counter: i});
 });
 
-var asm = (function(stdlib, foreign, heap) {
+var asm = function(stdlib, foreign, heap) {
     'use asm';
 
     var f64 = new stdlib.Float64Array(heap);
+    var i32 = new stdlib.Int32Array(heap);
     var pow = stdlib.Math.pow;
     var abs = stdlib.Math.abs;
     var floor = stdlib.Math.floor;
 
     var eps = 1.0e-17;
     var tp1 = 0;
+    var ntp = 25;
+    var intOffset = 500;
 
-    function main(id) {
+    function main(len) {
+        len = len |0;
+
+        var i = 0;
+
+        for (i = 0; (i |0) < (len |0); i = i + 1 |0) {
+            i32[intOffset + i << 2 >>2] = pi(i) |0;
+        }
+    }
+
+    function pi(id) {
         id = id |0;
 
         var pid = 0.0;
@@ -95,8 +112,6 @@ var asm = (function(stdlib, foreign, heap) {
         var pt = 0.0;
         var r = 0.0;
 
-        var ntp = 100; // 25 * 4
-
         if ((tp1 |0) == 0) {
             tp1 = 1;
             f64[0] = 1.0;
@@ -110,7 +125,7 @@ var asm = (function(stdlib, foreign, heap) {
             return +0.0;
         }
 
-        for (i = 0; (i |0) < (ntp |0); i = i + 8 |0) {
+        for (i = 0; (i |0) < (ntp |0); i = i + 1 |0) {
             if (+f64[i << 3 >>3] > p) {
                 break;
             }
@@ -120,7 +135,7 @@ var asm = (function(stdlib, foreign, heap) {
         p1 = p;
         r = 1.0;
 
-        for (j = 1; (j |0) < ((i + 1) |0); j = j + 1 |0) {
+        for (j = 1; (j |0) <= (i |0); j = j + 1 |0) {
             if (p1 >= pt) {
                 r = 16.0 * r;
                 r = r - (+(~~(r / ak))) * ak;
@@ -140,4 +155,4 @@ var asm = (function(stdlib, foreign, heap) {
     return {
         main: main
     };
-})(window, null, new ArrayBuffer(65536));
+};
